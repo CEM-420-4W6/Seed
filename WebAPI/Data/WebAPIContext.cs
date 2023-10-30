@@ -51,8 +51,27 @@ namespace WebAPI.Data
             };
 
             builder.Entity<Cat>().HasData(c1, c2);
+
+
+            var m1 = new
+            {
+                Id = 1,
+                Address = "123 Whatever st."
+            };
+
+            builder.Entity<House>().HasData(m1);
+
+            builder.Entity<House>()
+                .HasMany(house => house.Cats)
+                .WithMany(cat => cat.Houses)
+                .UsingEntity(cathouse =>
+                {
+                    cathouse.HasData(new { CatsId = 1, HousesId =1 });
+                    cathouse.HasData(new { CatsId = 2, HousesId = 1 });
+                });
         }
 
         public DbSet<Cat> Cats { get; set; } = default!;
+        public DbSet<House> Houses { get; set; } = default!;
     }
 }

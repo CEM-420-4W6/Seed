@@ -10,7 +10,10 @@ namespace WebAPI.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
         [JsonIgnore]
         public virtual DemoUser? DemoUser { get; set; }
+        [JsonIgnore]
+        public virtual List<House> Houses { get; set; } = new List<House>();
     }
 }
